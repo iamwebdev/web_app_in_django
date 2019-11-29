@@ -1,0 +1,36 @@
+{% extends 'music/base.html'%}
+{% block title %}
+    Album Details
+{% endblock %}
+{% block body %}
+<img height="200" width="200" src="{{album.album_logo.url}}">
+<br>
+<h1>{{album.album_title}} by {{album.artist}}</h1>
+{% if error_message %}
+    <p><strong>{{error_message}}</strong></p>
+{% endif %}
+<a class="btn btn-danger" href="#">Add Songs</a>
+<h3 style="color:green">Playlist</h3>
+    <table  border="1" cellpadding="1" cellspacing="2">
+        <tr>
+        <th>Sr No</th>
+        <th>Song Name</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+<form action="#" method="POST">
+    {% csrf_token %}
+    {% for song in album.song_set.all%}
+        <input type="radio" id="{{forloop.counter}}" name="fav_song" value="{{song.id}}">
+        <label for="{{forloop.counter}}">{{song.song_title}}</label>
+        {% if song.is_favourite %}
+            <img height="30" width="30" src="https://upload.wikimedia.org/wikipedia/commons/2/29/Gold_Star.svg" />
+        {% endif %}
+    <br>
+    {% endfor %}
+    <input type="submit" value="Add to Fav">
+</form>
+{% endblock %}

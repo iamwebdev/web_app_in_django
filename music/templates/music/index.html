@@ -1,0 +1,17 @@
+{% extends 'music/base.html'%}
+
+{% block body %}
+    {% for album in all_albums %}
+    <!--<li><a href="/music/{{album.id}}">{{album.album_title}}</a> </li>-->
+   <!--shortcut-->
+    <a href="{% url 'music:details' album.id%}">
+        <img height="100" width="100" src="{{album.album_logo.url}}">
+    </a>
+    <h2>Album: {{album.album_title}}</h2>
+    <h3>Artist: {{album.artist}}</h3>
+    <form action="{% url 'music:album-delete' album.id%}"  method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    {% endfor %}
+{% endblock %}
